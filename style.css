@@ -1,0 +1,792 @@
+/* ============================================================
+   ПЕРЕМЕННЫЕ (СТИЛЬ MAX UI)
+   ============================================================ */
+:root {
+    /* Фирменные цвета MAX: сине-фиолетовый градиент */
+    --max-blue: #0077FF;
+    --max-purple: #8A2BE2;
+    --max-gradient: linear-gradient(135deg, #0077FF 0%, #8A2BE2 100%);
+    --max-gradient-soft: linear-gradient(135deg, rgba(0,119,255,.08) 0%, rgba(138,43,226,.08) 100%);
+
+    /* Нейтральные цвета — светлая тема */
+    --bg: #FFFFFF;
+    --bg-secondary: #F2F3F5;
+    --text: #000000;
+    --text-secondary: #6D7885;
+    --card-bg: #F2F3F5;
+    --card-bg-elevated: #FFFFFF;
+    --border-color: rgba(0, 0, 0, 0.06);
+    --separator: rgba(0, 0, 0, 0.04);
+
+    /* Функциональные цвета */
+    --accent: var(--max-blue);
+    --success: #4BB34B;
+    --danger: #FF3B30;
+    --warning: #FFC107;
+
+    /* Скругления */
+    --radius-s: 8px;
+    --radius-m: 12px;
+    --radius-l: 16px;
+    --radius-xl: 20px;
+    --radius-pill: 100px;
+}
+
+body.dark {
+    --bg: #19191A;
+    --bg-secondary: #2C2C2E;
+    --text: #FFFFFF;
+    --text-secondary: #909499;
+    --card-bg: #2C2C2E;
+    --card-bg-elevated: #3A3A3C;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --separator: rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   БАЗА
+   ============================================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+}
+
+#app {
+    padding: 16px;
+    padding-bottom: 100px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.hidden { display: none !important; }
+
+/* Изображения общего назначения */
+.loader-logo img,
+.welcome-logo img,
+.school-icon-img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ============================================================
+   ЗАГРУЗКА
+   ============================================================ */
+.spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--card-bg);
+    border-top-color: var(--max-blue);
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    margin: 20px auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loader-logo { text-align: center; margin: 60px auto 0; }
+.loader-logo img { width: 100px; height: 100px; object-fit: contain; display: inline-block; }
+
+.welcome-logo { text-align: center; margin: 20px auto 24px; }
+.welcome-logo img { width: 120px; height: 120px; object-fit: contain; display: inline-block; }
+
+.school-icon-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+/* ============================================================
+   КАРТОЧКИ (плоские, без теней)
+   ============================================================ */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius-l);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.card.accent {
+    background: var(--max-gradient-soft);
+    border: 1px solid rgba(0, 119, 255, 0.12);
+}
+
+.card.locked { opacity: .5; }
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* ============================================================
+   КНОПКИ (плоские, со скруглением)
+   ============================================================ */
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--max-gradient);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-m);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s;
+}
+
+.btn-primary:active { opacity: .8; }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--text);
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 4px;
+    line-height: 1;
+}
+
+/* ============================================================
+   ВЫБОР КЛАССА
+   ============================================================ */
+.class-group { margin-bottom: 20px; }
+.group-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.class-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+.class-buttons button {
+    padding: 14px;
+    background: var(--card-bg);
+    border: none;
+    border-radius: var(--radius-m);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+.class-buttons button.selected {
+    background: var(--max-gradient);
+    color: #fff;
+}
+.class-buttons.disabled button {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
+.locked-hint {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    text-align: center;
+    padding: 8px;
+    background: rgba(255, 193, 7, .08);
+    border-radius: var(--radius-s);
+    border-left: 3px solid var(--warning);
+}
+
+.subject-chip {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--card-bg-elevated);
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+/* ============================================================
+   ШАПКА
+   ============================================================ */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.hearts { display: flex; gap: 2px; align-items: center; }
+.icon-heart { font-size: 18px; line-height: 1; display: inline-flex; align-items: center; }
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+.user-info span:last-child {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.sparks {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 15px;
+}
+.icon-spark { width: 20px; height: 20px; object-fit: contain; }
+
+/* ============================================================
+   ПРЕВЬЮ ШКОЛЫ
+   ============================================================ */
+.school-preview {
+    background: var(--max-gradient-soft);
+    border-radius: var(--radius-l);
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    border: 1px solid rgba(0, 119, 255, 0.08);
+}
+
+.school-preview h3 { font-size: 17px; margin-bottom: 4px; }
+
+.progress-bar {
+    height: 6px;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+body.dark .progress-bar { background: rgba(255, 255, 255, 0.08); }
+
+.progress-fill {
+    height: 100%;
+    background: var(--max-gradient);
+    border-radius: 3px;
+    transition: width .3s ease;
+}
+
+/* ============================================================
+   ЗАДАНИЯ
+   ============================================================ */
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-top: 1px solid var(--separator);
+    cursor: pointer;
+    align-items: center;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    padding: 14px 16px;
+    margin: 8px 0;
+    background: var(--card-bg);
+    border: 2px solid transparent;
+    border-radius: var(--radius-m);
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+    color: var(--text);
+    transition: border-color .15s, background .15s;
+    line-height: 1.4;
+}
+.option.selected {
+    border-color: var(--max-blue);
+    background: rgba(0, 119, 255, 0.06);
+}
+
+/* ============================================================
+   НИЖНЯЯ НАВИГАЦИЯ (полупрозрачное «стекло»)
+   ============================================================ */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--separator);
+    display: flex;
+    padding: 6px 0 10px;
+    z-index: 999;
+}
+body.dark .bottom-nav {
+    background: rgba(25, 25, 26, 0.85);
+}
+
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px 0;
+    transition: color .15s;
+}
+.nav-item span:last-child {
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 500;
+}
+.nav-item.active { color: var(--max-blue); }
+.nav-emoji {
+    font-size: 18px;
+    line-height: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .15s;
+}
+.nav-item.active .nav-emoji { transform: scale(1.1); }
+
+/* ============================================================
+   СООБЩЕНИЯ
+   ============================================================ */
+.error { color: var(--danger); font-size: 13px; margin-top: 8px; line-height: 1.4; }
+.success { color: var(--success); font-size: 13px; margin-top: 8px; line-height: 1.4; }
+
+/* ============================================================
+   МОДАЛЬНЫЕ ОКНА (плоские, со «стеклянным» фоном)
+   ============================================================ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+.modal-overlay.visible { opacity: 1; }
+
+.modal {
+    position: relative;
+    background: var(--bg);
+    border-radius: var(--radius-xl);
+    padding: 28px 20px 20px;
+    text-align: center;
+    max-width: 340px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: scale(.92);
+    transition: transform .2s cubic-bezier(.2, 1, .4, 1);
+    border: 1px solid var(--border-color);
+}
+.modal-overlay.visible .modal { transform: scale(1); }
+.modal.modal-wide { max-width: 420px; }
+
+/* Упрощённая подсветка вместо сложной анимации */
+.modal-glow {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(0,119,255,.2) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+.modal-glow.glow-warning { background: radial-gradient(circle, rgba(255,193,7,.2) 0%, transparent 70%); }
+.modal-glow.glow-danger  { background: radial-gradient(circle, rgba(255,59,48,.2) 0%, transparent 70%); }
+.modal-glow.glow-success { background: radial-gradient(circle, rgba(75,179,75,.2) 0%, transparent 70%); }
+
+.modal-content { position: relative; z-index: 1; }
+
+.modal-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    line-height: 1;
+}
+.modal-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.modal-title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}
+.modal-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.modal-amount {
+    font-size: 38px;
+    font-weight: 800;
+    background: var(--max-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin: 4px 0 12px;
+}
+
+.modal-chip {
+    display: inline-block;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    margin: 3px 3px 0;
+    background: var(--max-gradient-soft);
+    border: 1px solid rgba(0, 119, 255, 0.1);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+.modal-actions button { flex: 1; margin-top: 0; }
+
+.modal-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--max-gradient);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-m);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: opacity .15s;
+}
+.modal-btn:active { opacity: .8; }
+.modal-btn.btn-secondary {
+    background: var(--card-bg);
+    color: var(--text);
+}
+
+/* ============================================================
+   МАГАЗИН
+   ============================================================ */
+.shop-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--card-bg);
+    border-radius: var(--radius-m);
+    margin-bottom: 8px;
+}
+.shop-item.disabled { opacity: .45; }
+
+.shop-item-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: var(--bg);
+    border-radius: var(--radius-s);
+    flex-shrink: 0;
+}
+
+.shop-item-info { flex: 1; min-width: 0; }
+.shop-item-info b { display: block; font-size: 15px; margin-bottom: 2px; }
+
+.shop-item-price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    background: var(--max-gradient);
+    color: #fff;
+    border-radius: var(--radius-s);
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity .15s;
+}
+.shop-item-price:active { opacity: .8; }
+.shop-item-price:disabled {
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+.shop-item-price img { width: 15px; height: 15px; object-fit: contain; }
+
+/* ============================================================
+   РАЗВИТИЕ
+   ============================================================ */
+#screen-development .tab {
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 8px 16px;
+    transition: background .15s, color .15s;
+}
+#screen-development .tab.active {
+    background: var(--max-gradient);
+    color: #fff;
+}
+#dev-progress { transition: width .3s ease; }
+
+/* ============================================================
+   АККОРДЕОН ПРЕДМЕТОВ
+   ============================================================ */
+.subject-accordion {
+    background: var(--card-bg);
+    border-radius: var(--radius-l);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.subject-accordion.open {
+    background: var(--bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.subject-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+}
+.subject-icon { font-size: 26px; flex-shrink: 0; width: 34px; text-align: center; }
+.subject-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.subject-info b { font-size: 15px; font-weight: 600; }
+.subject-info .subtitle { font-size: 12px; }
+.subject-info .subtitle b { color: var(--max-blue); font-size: 12px; }
+.subject-progress { width: 40px; flex-shrink: 0; }
+.subject-progress-bar { height: 4px; background: rgba(0, 0, 0, 0.06); border-radius: 2px; overflow: hidden; }
+body.dark .subject-progress-bar { background: rgba(255, 255, 255, 0.08); }
+.subject-progress-fill { height: 100%; background: var(--max-gradient); border-radius: 2px; transition: width .3s; }
+.subject-arrow {
+    font-size: 14px;
+    color: var(--text-secondary);
+    transition: transform .25s ease;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+}
+.subject-body {
+    padding: 0 16px 12px;
+    animation: accordion-open .25s ease;
+}
+@keyframes accordion-open {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.subject-body .task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid var(--separator);
+    cursor: pointer;
+}
+.task-topic { font-size: 14px; flex: 1; padding-right: 12px; }
+.task-reward {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--max-blue);
+    flex-shrink: 0;
+}
+.task-plus { color: var(--max-blue); }
+.task-spark { width: 15px; height: 15px; object-fit: contain; }
+
+/* ============================================================
+   ПРОГРЕСС СТРОИТЕЛЬСТВА
+   ============================================================ */
+.build-progress { margin-top: 8px; }
+.build-progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+.build-timer { font-weight: 600; color: var(--max-blue); }
+.build-progress-fill { background: linear-gradient(90deg, #FFC107 0%, #FF9800 100%); }
+
+/* ============================================================
+   2D-КАРТА ШКОЛЫ
+   ============================================================ */
+.school-map-wrapper {
+    padding: 16px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    text-align: center;
+}
+
+.school-canvas {
+    display: inline-block;
+    padding: 0;
+    line-height: 0;
+    font-size: 0;
+    min-width: fit-content;
+    margin: 0 auto;
+}
+
+.school-grid {
+    position: relative;
+    display: inline-block;
+    border-radius: var(--radius-m);
+    background: linear-gradient(135deg, #b8e994 0%, #78c257 50%, #4a9d3a 100%);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.school-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .15) 2px, transparent 2px),
+        radial-gradient(circle at 70% 60%, rgba(255, 255, 255, .12) 2px, transparent 2px);
+    background-size: 60px 60px, 80px 80px;
+    pointer-events: none;
+    opacity: .7;
+    z-index: 0;
+}
+
+.school-building {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .8);
+    border: 2px solid rgba(0, 119, 255, .3);
+    border-radius: var(--radius-s);
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform .15s;
+    z-index: 2;
+}
+
+.school-building:hover,
+.school-building:active {
+    transform: scale(1.06);
+    z-index: 10;
+}
+
+/* ============================================================
+   ЗАБОР ПО ПЕРИМЕТРУ
+   ============================================================ */
+.school-perimeter {
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+/* ============================================================
+   СТАТИСТИКА НА КАРТЕ
+   ============================================================ */
+.stats-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+    border-radius: var(--radius-m);
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    gap: 8px;
+}
+
+.stats-strip-item {
+    flex: 1;
+    text-align: center;
+}
+
+.stats-strip-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+}
+
+.stats-strip-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--max-blue);
+}
+
+.stats-strip-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--separator);
+}
+/* Шапка статистики */
+.top-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 15px;
+}
+.icon-stat {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+a.btn-primary {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+}
+a.btn-primary:active { opacity: .8; }
+a.btn-primary {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+}
+a.btn-primary:active { opacity: .8; }

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Школа: Путь к мечте (демо)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+<!-- ПЛЕЙСХОЛДЕР -->
+<div id="screen-welcome" class="screen">
+    <div class="welcome-logo">
+        <img src="assets/logo.png" alt="Школа: Путь к мечте">
+    </div>
+    <h1 style="font-size:24px;line-height:1.3;margin-bottom:12px;text-align:center;">Привет, дорогой друг!</h1>
+    <div class="card accent" style="text-align:left;">
+        <p style="font-weight:600;margin-bottom:8px;">🧪 Это демо-версия</p>
+        <p class="subtitle" style="margin-bottom:16px;">Здесь вы можете посмотреть, как устроено приложение. Данные сохраняются только в вашем браузере и не отправляются на сервер.</p>
+        <p style="font-weight:600;margin-bottom:8px;">🚀 Полная версия</p>
+        <p class="subtitle" style="margin-bottom:12px;">Работает внутри мессенджера MAX с реальными заданиями, учителем и сохранением прогресса. <b>В полной версии объектов и заданий в 10 раз больше!</b></p>
+        <a href="https://max.ru/se14496122_bot" target="_blank" rel="noopener" class="btn-primary" style="display:block;text-align:center;text-decoration:none;">Открыть в MAX →</a>
+    </div>
+    <button class="btn-primary" onclick="App.startDemo()">🎮 Продолжить в демо</button>
+    <p class="subtitle" style="text-align:center;margin-top:16px;font-size:12px;">Ссылка на бота: <b>max.ru/se14496122_bot</b></p>
+    <button class="modal-btn btn-secondary" style="margin-top:12px;background:transparent;color:#6D7885;font-size:13px;" onclick="if(confirm('Сбросить весь демо-прогресс?')){localStorage.clear();location.reload();}">🗑️ Сбросить демо</button>
+</div>
+
+<!-- Загрузка -->
+<div id="screen-loader" class="screen hidden">
+    <div class="loader-logo"><img src="assets/logo.png" alt="Школа: Путь к мечте"></div>
+    <div class="spinner"></div>
+    <p>Загрузка школы...</p>
+</div>
+
+<!-- Выбор класса -->
+<div id="screen-class" class="screen hidden">
+    <div class="welcome-logo"><img src="assets/logo.png" alt="Школа: Путь к мечте"></div>
+    <h1>Добро пожаловать<br>в свою школу!</h1>
+    <p class="subtitle">Выбери класс — и начнём путешествие</p>
+    <div class="class-group">
+        <span class="group-label">1–4 класс</span>
+        <div class="class-buttons">
+            <button data-class="1">1</button><button data-class="2">2</button>
+            <button data-class="3">3</button><button data-class="4">4</button>
+        </div>
+    </div>
+    <div class="class-group">
+        <span class="group-label">5–6 класс</span>
+        <div class="class-buttons">
+            <button data-class="5">5</button><button data-class="6">6</button>
+        </div>
+    </div>
+    <div class="class-group locked-group">
+        <span class="group-label">7–11 класс</span>
+        <div class="class-buttons disabled">
+            <button disabled>7</button><button disabled>8</button>
+            <button disabled>9</button><button disabled>10</button><button disabled>11</button>
+        </div>
+        <p class="locked-hint">🚧 В разработке — скоро откроем!</p>
+    </div>
+    <div id="class-preview" class="card hidden" style="margin-top:16px;">
+        <b>Твои предметы:</b>
+        <div id="class-subjects" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
+        <button class="btn-primary" id="btn-confirm-class" style="margin-top:12px;">Начать путешествие</button>
+    </div>
+</div>
+
+<!-- Карта -->
+<div id="screen-map" class="screen hidden">
+    <header class="top-bar">
+        <div class="hearts" id="top-lives"></div>
+        <div class="user-info">
+            <span id="user-name">—</span>
+            <span id="user-class">—</span>
+        </div>
+        <div class="top-stats">
+            <div class="stat-item"><img src="assets/spark.png" class="icon-stat" alt="Искры"><span id="top-sparks">0</span></div>
+            <div class="stat-item"><img src="assets/xp.png" class="icon-stat" alt="Опыт"><span id="top-xp">0</span></div>
+        </div>
+    </header>
+
+    <div class="school-preview">
+        <img src="assets/school.png" class="school-icon-img" alt="">
+        <h3>Твоя школа</h3>
+        <p>Уровень <span id="school-level">1</span></p>
+        <p style="margin-top: 8px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <img src="assets/xp.png" style="width: 22px; height: 22px; object-fit: contain;" alt="Опыт">
+            <span id="school-xp">0</span> опыта
+        </p>
+        <div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" id="school-progress-fill" style="width:0%"></div></div>
+    </div>
+
+    <div id="streak-display" class="subtitle" style="text-align:center;margin-bottom:12px;"></div>
+
+    <nav class="bottom-nav">
+        <button data-screen="school" class="nav-item active"><span class="nav-emoji">🏫</span><span>Школа</span></button>
+        <button data-screen="map2d" class="nav-item"><span class="nav-emoji">🗺️</span><span>Карта</span></button>
+        <button data-screen="shop" class="nav-item"><span class="nav-emoji">🛒</span><span>Магазин</span></button>
+        <button data-screen="development" class="nav-item"><span class="nav-emoji">🏗️</span><span>Развитие</span></button>
+        <button data-screen="tasks" class="nav-item"><span class="nav-emoji">📚</span><span>Задания</span></button>
+    </nav>
+</div>
+
+<!-- Школа -->
+<div id="screen-school" class="screen hidden">
+    <button class="back-btn" onclick="App.go('map')">←</button>
+    <h2>🏫 Твоя школа</h2>
+    <div class="school-preview">
+        <img src="assets/school.png" class="school-icon-img" alt="">
+        <h3>Уровень <span id="school-level-display">1</span></h3>
+        <p class="subtitle">Построено: <b id="school-built-count">0</b></p>
+        <div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" id="school-progress-bar" style="width:0%"></div></div>
+    </div>
+    <button class="btn-primary" style="margin-bottom:12px;" onclick="App.go('map2d')">🗺️ Посмотреть карту школы</button>
+    <button class="btn-primary" style="margin-bottom:12px;" onclick="App.go('development')">🏗️ Перейти к развитию</button>
+</div>
+
+<!-- 2D карта -->
+<div id="screen-map2d" class="screen hidden">
+    <button class="back-btn" onclick="App.go('map')">←</button>
+    <h2>🗺️ Карта школы</h2>
+    <div class="school-map-wrapper"><div id="map2d-canvas" class="school-canvas"></div></div>
+    <div class="card" style="margin-top:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span>Уровень <b id="map2d-level">1</b></span>
+            <span class="subtitle">Построено: <b id="map2d-built-count">0</b></span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="map2d-progress" style="width:0%"></div></div>
+    </div>
+    <button class="btn-primary" style="margin-bottom:12px;" onclick="App.go('development')">🏗️ Перейти к развитию</button>
+</div>
+
+<!-- Магазин -->
+<div id="screen-shop" class="screen hidden">
+    <button class="back-btn" onclick="App.go('map')">←</button>
+    <h2>🛒 Магазин ресурсов</h2>
+    <div class="card" style="margin-bottom:12px; border-left: 3px solid var(--max-blue);">
+        <p class="subtitle">⭐ В полной версии ассортимент товаров гораздо шире!</p>
+    </div>
+    <div class="card" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>Твои Искры:</span>
+        <span style="display:flex;align-items:center;gap:6px;font-weight:700;font-size:18px;">
+            <img src="assets/spark.png" style="width:22px;height:22px;object-fit:contain;"><span id="shop-sparks">0</span>
+        </span>
+    </div>
+    <div id="shop-list"></div>
+</div>
+
+<!-- Развитие -->
+<div id="screen-development" class="screen hidden">
+    <button class="back-btn" onclick="App.go('map')">←</button>
+    <h2>🏗️ Развитие школы</h2>
+    <div class="card" style="margin-bottom:12px; border-left: 3px solid var(--max-purple);">
+        <p class="subtitle">🏙️ В полной версии доступно более 50 видов зданий и построек!</p>
+    </div>
+    <div class="card accent">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <b id="dev-level-title">Уровень 1</b>
+            <span class="subtitle"><span id="dev-exp">0</span> / <span id="dev-next-exp">—</span> опыта</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="dev-progress" style="width:0%"></div></div>
+    </div>
+    <div class="card">
+        <b style="display:block;margin-bottom:8px;">Твои ресурсы</b>
+        <div id="dev-resources" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    </div>
+    <div class="tabs" style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px;">
+        <button class="tab active" data-cat="all" style="flex:0 0 auto;padding:8px 14px;">Все</button>
+        <button class="tab" data-cat="main" style="flex:0 0 auto;padding:8px 14px;">Основные</button>
+        <button class="tab" data-cat="decor" style="flex:0 0 auto;padding:8px 14px;">Декор</button>
+    </div>
+    <div id="dev-buildings"></div>
+</div>
+
+<!-- Задания -->
+<div id="screen-tasks" class="screen hidden">
+    <button class="back-btn" onclick="App.go('map')">←</button>
+    <h2>Задания</h2>
+    <div class="card" style="margin-bottom:12px; border-left: 3px solid var(--success);">
+        <p class="subtitle">📚 В полной версии заданий в 10 раз больше, с картинками и разными уровнями сложности!</p>
+    </div>
+    <div id="tasks-list"></div>
+</div>
+
+<!-- Задание -->
+<div id="screen-task" class="screen hidden">
+    <button class="back-btn" onclick="App.go('tasks')">←</button>
+    <div id="task-body"></div>
+</div>
+
+<!-- Достижения -->
+<div id="screen-ach" class="screen hidden">
+    <button class="back-btn" onclick="App.go('map')">←</button>
+    <h2>Достижения</h2>
+    <div id="ach-list"></div>
+</div>
+
+</div>
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
