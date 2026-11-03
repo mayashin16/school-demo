@@ -8,6 +8,8 @@
 Работает полностью в браузере: данные сохраняются в `localStorage`, задания читаются из CSV.
 
 ## 🚀 Быстрый старт через Docker
+1. Установите Docker
+2. Установите git (winget install --id Git.Git -e --source winget)
 
 ```bash
 git clone https://github.com/mayashin16/school-demo.git school-demo
